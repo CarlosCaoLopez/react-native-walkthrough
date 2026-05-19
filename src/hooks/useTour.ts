@@ -1,17 +1,23 @@
 import { useCallback } from 'react';
-import type { createTourEngine } from '../engine/tourEngine';
+import { useTourContext } from '../components/TourProvider';
 import { useTourStore } from '../store/tourStore';
-import type { Tour } from '../types';
+import type { TourId } from '../types';
 
-type TourEngine = ReturnType<typeof createTourEngine>;
-
-export function useTour(engine: TourEngine) {
+export function useTour() {
+  const { engine, toursMap } = useTourContext();
   const status = useTourStore((s) => s.status);
   const currentStepIndex = useTourStore((s) => s.currentStepIndex);
   const activeTour = useTourStore((s) => s.activeTour);
   const skip = useTourStore((s) => s.skip);
 
-  const start = useCallback((tour: Tour) => engine.start(tour), [engine]);
+  const start = useCallback(
+    (tourId: TourId) => {
+      const tour = toursMap.get(tourId);
+      if (!tour) throw new Error(`Tour "${tourId}" not found`);
+      return engine.start(tour);
+    },
+    [engine, toursMap]
+  );
   const stop = useCallback(() => engine.stop(), [engine]);
   const next = useCallback(() => engine.next(), [engine]);
   const prev = useCallback(() => engine.prev(), [engine]);
