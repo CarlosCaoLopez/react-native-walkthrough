@@ -166,5 +166,9 @@
   },
   "dependencies": {
     "zustand": "^5.0.13"
+  },
+  "resolutions": {
+    "jest-environment-node": "30.4.1",
+    "jest-mock": "30.4.1"
   }
 }
