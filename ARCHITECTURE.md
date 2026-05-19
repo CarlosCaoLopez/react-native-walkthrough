@@ -265,7 +265,7 @@ createReactNavigationAdapter(ref): NavigationAdapter
 ## 5. Project structure
 
 ```
-rn-tour-guide/
+react-native-walkthrough/
 ├── src/
 │   ├── index.ts                  Public API (re-exports)
 │   ├── types.ts                  Shared types
