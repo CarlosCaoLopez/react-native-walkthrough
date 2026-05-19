@@ -1,18 +1,10 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  type ReactNode,
-} from 'react';
+import { createContext, useContext, useMemo, type ReactNode } from 'react';
 import { PortalProvider } from '@gorhom/portal';
 import { createTourEngine } from '../engine/tourEngine';
-import { useTourStore } from '../store/tourStore';
 import type { NavigationAdapter, PersistanceAdapter } from '../adapters/types';
 import type { Tour, TourId } from '../types';
 import { TourOverlay } from './TourOverlay';
-
-const PERSISTENCE_KEY = 'rn-walkthrough:progress';
+import { useTourPersistence } from '../hooks/useTourPersistence';
 
 type TourEngine = ReturnType<typeof createTourEngine>;
 
@@ -53,48 +45,7 @@ export function TourProvider({
 
   const toursMap = useMemo(() => new Map(tours.map((t) => [t.id, t])), [tours]);
 
-  useEffect(() => {
-    if (!persistence) return;
-    (async () => {
-      const raw = await persistence.get(PERSISTENCE_KEY);
-      if (!raw) return;
-      try {
-        const { tourId, stepIndex } = JSON.parse(raw) as {
-          tourId: TourId;
-          stepIndex: number;
-        };
-        const tour = toursMap.get(tourId);
-        if (!tour) return;
-        useTourStore.setState({
-          activeTour: tour,
-          currentStepIndex: stepIndex,
-          status: 'running',
-          activeLayout: null,
-        });
-        await engine.runStep(stepIndex);
-      } catch {
-        // corrupted data — ignore
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!persistence) return;
-    return useTourStore.subscribe((state) => {
-      if (state.status === 'running' && state.activeTour) {
-        persistence.set(
-          PERSISTENCE_KEY,
-          JSON.stringify({
-            tourId: state.activeTour.id,
-            stepIndex: state.currentStepIndex,
-          })
-        );
-      } else if (state.status === 'idle' || state.status === 'completed') {
-        persistence.remove(PERSISTENCE_KEY);
-      }
-    });
-  }, [persistence]);
+  useTourPersistence(persistence, engine, toursMap);
 
   const hostName = overlayLevel === 'navigator' ? undefined : overlayLevel;
 
