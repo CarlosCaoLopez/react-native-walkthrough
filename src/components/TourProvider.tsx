@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 import { PortalProvider } from '@gorhom/portal';
 import { createTourEngine } from '../engine/tourEngine';
-import type { NavigationAdapter, PersistanceAdapter } from '../adapters/types';
+import type { NavigationAdapter, PersistenceAdapter } from '../adapters/types';
 import type { Tour, TourId } from '../types';
 import { TourOverlay } from './TourOverlay';
 import { useTourPersistence } from '../hooks/useTourPersistence';
@@ -24,7 +24,7 @@ export function useTourContext(): TourContextValue {
 interface TourProviderProps {
   tours: Tour[];
   navigationAdapter: NavigationAdapter;
-  persistence?: PersistanceAdapter;
+  persistence?: PersistenceAdapter;
   overlayLevel?: 'navigator' | 'modal' | 'system';
   tapOutsideToAdvance?: boolean;
   children: ReactNode;

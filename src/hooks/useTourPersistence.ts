@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useTourStore } from '../store/tourStore';
-import type { PersistanceAdapter } from '../adapters/types';
+import type { PersistenceAdapter } from '../adapters/types';
 import type { Tour, TourId } from '../types';
 
 type TourEngine = { runStep(index: number): Promise<void> };
@@ -8,7 +8,7 @@ type TourEngine = { runStep(index: number): Promise<void> };
 const PERSISTENCE_KEY = 'rn-walkthrough:progress';
 
 export function useTourPersistence(
-  persistence: PersistanceAdapter | undefined,
+  persistence: PersistenceAdapter | undefined,
   engine: TourEngine,
   toursMap: Map<TourId, Tour>
 ): void {

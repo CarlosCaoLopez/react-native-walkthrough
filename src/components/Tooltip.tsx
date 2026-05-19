@@ -1,3 +1,4 @@
+import type { LayoutChangeEvent } from 'react-native';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import type { TooltipPlacement } from '../utils/positioning';
 
@@ -11,6 +12,7 @@ interface TooltipProps {
   onPrev?: () => void;
   onNext: () => void;
   onSkip: () => void;
+  onLayout?: (e: LayoutChangeEvent) => void;
 }
 
 const ARROW = 14;
@@ -33,11 +35,15 @@ export function Tooltip({
   onPrev,
   onNext,
   onSkip,
+  onLayout,
 }: TooltipProps) {
   const isLast = stepIndex === totalSteps - 1;
 
   return (
-    <View style={[styles.card, { left: position.x, top: position.y }]}>
+    <View
+      style={[styles.card, { left: position.x, top: position.y }]}
+      onLayout={onLayout}
+    >
       <View style={[styles.arrow, arrowStyle[resolvedPlacement]]} />
       {title ? <Text style={styles.title}>{title}</Text> : null}
       <Text style={styles.text}>{text}</Text>

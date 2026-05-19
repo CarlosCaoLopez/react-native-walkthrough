@@ -4,7 +4,7 @@ export interface NavigationAdapter {
   subscribe(listener: (route: string) => void): () => void;
 }
 
-export interface PersistanceAdapter {
+export interface PersistenceAdapter {
   get(key: string): Promise<string | null>;
   set(key: string, value: string): Promise<void>;
   remove(key: string): Promise<void>;
