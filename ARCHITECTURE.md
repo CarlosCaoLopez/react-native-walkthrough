@@ -120,6 +120,8 @@ Tour state (`activeTour`, `currentStepIndex`, `status`, `activeLayout`) lives in
 
 **Reason**: React Context triggers re-renders in all consumers when any part of the state changes. Zustand allows selective subscriptions (`useTourStore(s => s.currentStep)`) and avoids unnecessary re-renders across the app — critical when the overlay updates 60 times per second during an animation.
 
+`TourContext` (engine + toursMap) and `useTourContext` live in `store/tourContext.ts`, separate from `TourProvider`. This breaks the require cycle that would exist if `TourOverlay` imported from `TourProvider` and `TourProvider` imported `TourOverlay`.
+
 ### 2.7. Spotlight with Skia + Reanimated
 
 The mask with an illuminated "hole" is implemented with `@shopify/react-native-skia`:
@@ -272,7 +274,8 @@ react-native-walkthrough/
 │   ├── defineTour.ts             Typed helper for defining tours
 │   ├── store/
 │   │   ├── tourStore.ts          Zustand tour store
-│   │   └── registry.ts           Target registry (id → ref map)
+│   │   ├── registry.ts           Target registry (id → ref map)
+│   │   └── tourContext.ts        React context + useTourContext (isolated to break circular dep)
 │   ├── components/
 │   │   ├── TourProvider.tsx      Root provider + adapter injection
 │   │   ├── TourTarget.tsx        Wrapper that registers refs by id
