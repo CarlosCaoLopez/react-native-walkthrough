@@ -7,7 +7,7 @@ import { useTourStore } from '../store/tourStore';
 import { computeTooltipPosition } from '../utils/positioning';
 import { Spotlight } from './Spotlight';
 import { Tooltip } from './Tooltip';
-import { useTourContext } from './TourProvider';
+import { useTourContext } from '../store/tourContext';
 
 interface TourOverlayProps {
   hostName?: string;

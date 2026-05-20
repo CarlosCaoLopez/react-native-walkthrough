@@ -1,25 +1,13 @@
-import { createContext, useContext, useMemo, type ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { PortalProvider } from '@gorhom/portal';
 import { createTourEngine } from '../engine/tourEngine';
 import type { NavigationAdapter, PersistenceAdapter } from '../adapters/types';
-import type { Tour, TourId } from '../types';
+import type { Tour } from '../types';
 import { TourOverlay } from './TourOverlay';
 import { useTourPersistence } from '../hooks/useTourPersistence';
+import { TourContext } from '../store/tourContext';
 
-type TourEngine = ReturnType<typeof createTourEngine>;
-
-interface TourContextValue {
-  engine: TourEngine;
-  toursMap: Map<TourId, Tour>;
-}
-
-const TourContext = createContext<TourContextValue | null>(null);
-
-export function useTourContext(): TourContextValue {
-  const ctx = useContext(TourContext);
-  if (!ctx) throw new Error('useTourContext must be used within TourProvider');
-  return ctx;
-}
+export { useTourContext } from '../store/tourContext';
 
 interface TourProviderProps {
   tours: Tour[];
