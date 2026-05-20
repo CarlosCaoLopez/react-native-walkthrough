@@ -1,8 +1,5 @@
 # react-native-walkthrough
 
-[![REUSE Compliant](https://api.reuse.software/badge/github.com/CarlosCaoLopez/react-native-walkthrough)](https://api.reuse.software/info/github.com/CarlosCaoLopez/react-native-walkthrough)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/FIXME/badge)](https://www.bestpractices.dev/projects/FIXME)
-[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/CarlosCaoLopez/react-native-walkthrough/badge)](https://scorecard.dev/viewer/?uri=github.com/CarlosCaoLopez/react-native-walkthrough)
 [![CI](https://github.com/CarlosCaoLopez/react-native-walkthrough/actions/workflows/ci.yml/badge.svg)](https://github.com/CarlosCaoLopez/react-native-walkthrough/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/react-native-walkthrough)](https://www.npmjs.com/package/react-native-walkthrough)
 
