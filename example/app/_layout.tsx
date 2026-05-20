@@ -13,7 +13,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <Bridge />
       <TourProvider tours={[onboardingTour]} navigationAdapter={adapter}>
-        <Stack />
+        <Stack screenOptions={{ headerShown: false }} />
       </TourProvider>
     </SafeAreaProvider>
   );

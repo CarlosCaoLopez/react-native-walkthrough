@@ -5,7 +5,7 @@ export const onboardingTour = defineTour({
   steps: [
     {
       id: 'search',
-      route: '/(tabs)/home',
+      route: '/(tabs)',
       target: 'home.search',
       title: 'Search',
       text: 'Find anything fast with the search bar.',

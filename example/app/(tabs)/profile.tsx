@@ -1,16 +1,17 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { TourTarget } from 'react-native-walkthrough';
 
 export default function ProfileScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TourTarget id="profile.avatar">
         <View style={styles.avatar}>
           <Text style={styles.avatarText}>JD</Text>
         </View>
       </TourTarget>
       <Text style={styles.name}>John Doe</Text>
-    </View>
+    </SafeAreaView>
   );
 }
 

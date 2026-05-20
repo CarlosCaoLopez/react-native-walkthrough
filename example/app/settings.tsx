@@ -1,9 +1,10 @@
 import { View, Text, Switch, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { TourTarget } from 'react-native-walkthrough';
 
 export default function SettingsScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.heading}>Settings</Text>
       <TourTarget id="settings.notifs">
         <View style={styles.row}>
@@ -11,7 +12,7 @@ export default function SettingsScreen() {
           <Switch />
         </View>
       </TourTarget>
-    </View>
+    </SafeAreaView>
   );
 }
 
