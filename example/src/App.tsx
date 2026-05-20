@@ -1,20 +1,2 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from 'react-native-walkthrough';
-
-const result = multiply(3, 7);
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// Entry point replaced by expo-router/entry — see app/_layout.tsx
+export {};

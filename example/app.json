@@ -13,7 +13,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "walkthrough.example"
+      "bundleIdentifier": "walkthrough.example",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,8 +27,17 @@
       },
       "package": "walkthrough.example"
     },
+    "scheme": "walkthrough-example",
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": ["expo-router"],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ea924e10-4d2d-40d9-8c2e-85a688160d78"
+      }
     }
   }
 }
