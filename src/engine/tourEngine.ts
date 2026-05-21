@@ -1,9 +1,27 @@
+import type { TargetEntry } from '../store/registry';
 import type { NavigationAdapter } from '../adapters/types';
 import { registry } from '../store/registry';
 import { useTourStore } from '../store/tourStore';
-import type { Tour } from '../types';
+import type { TargetId, Tour } from '../types';
 
-const WAIT_TIMEOUT = 3000;
+const WAIT_TIMEOUT = 4000;
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 500;
+
+async function waitForWithRetry(
+  id: TargetId,
+  retries: number
+): Promise<TargetEntry> {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      return await registry.waitFor(id, WAIT_TIMEOUT);
+    } catch (err) {
+      if (attempt === retries) throw err;
+      await new Promise<void>((r) => setTimeout(r, RETRY_DELAY));
+    }
+  }
+  throw new Error(`TourTarget "${id}" not registered after ${retries} retries`);
+}
 
 async function runStep(
   stepIndex: number,
@@ -19,7 +37,7 @@ async function runStep(
     await adapter.navigate(step.route);
   }
 
-  const entry = await registry.waitFor(step.target, WAIT_TIMEOUT);
+  const entry = await waitForWithRetry(step.target, MAX_RETRIES);
 
   await new Promise<void>((resolve) => {
     requestAnimationFrame(() => {
@@ -35,7 +53,12 @@ export function createTourEngine(adapter: NavigationAdapter) {
   return {
     async start(tour: Tour): Promise<void> {
       useTourStore.getState().start(tour);
-      await runStep(0, adapter);
+      try {
+        await runStep(0, adapter);
+      } catch (err) {
+        useTourStore.getState().stop();
+        throw err;
+      }
     },
 
     stop(): void {
@@ -46,13 +69,23 @@ export function createTourEngine(adapter: NavigationAdapter) {
       useTourStore.getState().next();
       const { status, currentStepIndex } = useTourStore.getState();
       if (status !== 'running') return;
-      await runStep(currentStepIndex, adapter);
+      try {
+        await runStep(currentStepIndex, adapter);
+      } catch (err) {
+        useTourStore.getState().stop();
+        throw err;
+      }
     },
 
     async prev(): Promise<void> {
       useTourStore.getState().prev();
       const { currentStepIndex } = useTourStore.getState();
-      await runStep(currentStepIndex, adapter);
+      try {
+        await runStep(currentStepIndex, adapter);
+      } catch (err) {
+        useTourStore.getState().stop();
+        throw err;
+      }
     },
 
     runStep: (stepIndex: number) => runStep(stepIndex, adapter),
