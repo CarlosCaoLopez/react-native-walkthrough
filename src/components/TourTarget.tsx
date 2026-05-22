@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import type { ComponentRef, ReactNode } from 'react';
 import { View } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native';
 import { registry } from '../store/registry';
 import { useTourStore } from '../store/tourStore';
 import { useTargetLayout } from '../hooks/useTargetLayout';
@@ -9,9 +10,10 @@ import type { TargetId } from '../types';
 interface TourTargetProps {
   id: TargetId;
   children: ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
-export function TourTarget({ id, children }: TourTargetProps) {
+export function TourTarget({ id, children, style }: TourTargetProps) {
   const viewRef = useRef<ComponentRef<typeof View>>(null);
   const { onLayout, layout } = useTargetLayout(viewRef);
 
@@ -30,7 +32,7 @@ export function TourTarget({ id, children }: TourTargetProps) {
   }, [isActiveTarget, layout, setLayout]);
 
   return (
-    <View ref={viewRef} onLayout={onLayout} collapsable={false}>
+    <View ref={viewRef} onLayout={onLayout} collapsable={false} style={style}>
       {children}
     </View>
   );
