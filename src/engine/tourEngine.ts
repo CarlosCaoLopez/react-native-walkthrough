@@ -3,8 +3,9 @@ import type { NavigationAdapter } from '../adapters/types';
 import { registry } from '../store/registry';
 import { useTourStore } from '../store/tourStore';
 import type { TargetId, Tour } from '../types';
+import { measureWithRetry } from '../utils/measure';
 
-const WAIT_TIMEOUT = 4000;
+const WAIT_TIMEOUT = 3000;
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 500;
 
@@ -39,14 +40,8 @@ async function runStep(
 
   const entry = await waitForWithRetry(step.target, MAX_RETRIES);
 
-  await new Promise<void>((resolve) => {
-    requestAnimationFrame(() => {
-      entry.ref.current?.measureInWindow((x, y, width, height) => {
-        useTourStore.getState().setLayout({ x, y, width, height });
-        resolve();
-      });
-    });
-  });
+  const layout = await measureWithRetry(entry.ref);
+  useTourStore.getState().setLayout(layout);
 }
 
 export function createTourEngine(adapter: NavigationAdapter) {

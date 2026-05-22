@@ -4,16 +4,20 @@ import { Dimensions } from 'react-native';
 import type { View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import type { TargetLayout } from '../types';
+import { measureWithRetry } from '../utils/measure';
 
 export function useTargetLayout(
   ref: RefObject<ComponentRef<typeof View> | null>
 ): { onLayout: () => void; layout: TargetLayout | null } {
   const [layout, setLayout] = useState<TargetLayout | null>(null);
 
-  const measure = useCallback(() => {
-    ref.current?.measureInWindow((x, y, width, height) => {
-      setLayout({ x, y, width, height });
-    });
+  const measure = useCallback(async () => {
+    try {
+      const layout = await measureWithRetry(ref);
+      setLayout(layout);
+    } catch {
+      // target unmounted or unavailable
+    }
   }, [ref]);
 
   const onLayout = useCallback(() => {
@@ -25,7 +29,11 @@ export function useTargetLayout(
     return () => sub.remove();
   }, [measure]);
 
-  useFocusEffect(measure);
+  useFocusEffect(
+    useCallback(() => {
+      measure();
+    }, [measure])
+  );
 
   return { onLayout, layout };
 }
