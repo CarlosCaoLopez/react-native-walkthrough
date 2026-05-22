@@ -149,9 +149,11 @@ describe('createTourEngine', () => {
       const engine = createTourEngine(makeAdapter());
       const tour = makeTour({ steps: [{ id: 's1', target: 't1', text: 'x' }] });
 
-      await expect(engine.start(tour)).rejects.toThrow(
-        'not registered within 3000ms'
-      );
+      const promise = engine.start(tour);
+      await Promise.all([
+        expect(promise).rejects.toThrow('not registered within 3000ms'),
+        jest.runAllTimersAsync(),
+      ]);
     });
 
     it('stores measured layout in activeLayout', async () => {
