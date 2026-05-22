@@ -34,7 +34,7 @@
   "scripts": {
     "example": "yarn workspace react-native-quick-walkthrough-example",
     "clean": "del-cli lib",
-    "prepare": "husky",
+    "prepare": "husky && bob build",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest",
