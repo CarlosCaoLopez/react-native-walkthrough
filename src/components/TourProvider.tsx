@@ -15,6 +15,7 @@ interface TourProviderProps {
   persistence?: PersistenceAdapter;
   overlayLevel?: 'navigator' | 'modal' | 'system';
   tapOutsideToAdvance?: boolean;
+  blockOutsideTouches?: boolean;
   children: ReactNode;
 }
 
@@ -24,6 +25,7 @@ export function TourProvider({
   persistence,
   overlayLevel = 'navigator',
   tapOutsideToAdvance,
+  blockOutsideTouches,
   children,
 }: TourProviderProps) {
   const engine = useMemo(
@@ -44,6 +46,7 @@ export function TourProvider({
         <TourOverlay
           hostName={hostName}
           tapOutsideToAdvance={tapOutsideToAdvance}
+          blockOutsideTouches={blockOutsideTouches}
         />
       </PortalProvider>
     </TourContext.Provider>

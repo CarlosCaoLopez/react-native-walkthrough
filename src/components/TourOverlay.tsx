@@ -12,11 +12,13 @@ import { useTourContext } from '../store/tourContext';
 interface TourOverlayProps {
   hostName?: string;
   tapOutsideToAdvance?: boolean;
+  blockOutsideTouches?: boolean;
 }
 
 export function TourOverlay({
   hostName,
   tapOutsideToAdvance = false,
+  blockOutsideTouches,
 }: TourOverlayProps) {
   const activeTour = useTourStore((s) => s.activeTour);
   const currentStepIndex = useTourStore((s) => s.currentStepIndex);
@@ -44,6 +46,12 @@ export function TourOverlay({
   const step = activeTour.steps[currentStepIndex];
   if (!step) return null;
 
+  const effectiveBlock =
+    step.blockOutsideTouches ??
+    activeTour.blockOutsideTouches ??
+    blockOutsideTouches ??
+    false;
+
   const { x, y, resolvedPlacement } = computeTooltipPosition({
     target: activeLayout,
     screen: { width: screenWidth, height: screenHeight },
@@ -56,7 +64,7 @@ export function TourOverlay({
 
   const content = (
     <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
-      {tapOutsideToAdvance && (
+      {(effectiveBlock || tapOutsideToAdvance) && (
         <>
           <Pressable
             style={{
@@ -66,7 +74,7 @@ export function TourOverlay({
               right: 0,
               height: ty,
             }}
-            onPress={next}
+            onPress={tapOutsideToAdvance ? next : undefined}
           />
           <Pressable
             style={{
@@ -76,7 +84,7 @@ export function TourOverlay({
               right: 0,
               bottom: 0,
             }}
-            onPress={next}
+            onPress={tapOutsideToAdvance ? next : undefined}
           />
           <Pressable
             style={{
@@ -86,7 +94,7 @@ export function TourOverlay({
               width: tx,
               height: th,
             }}
-            onPress={next}
+            onPress={tapOutsideToAdvance ? next : undefined}
           />
           <Pressable
             style={{
@@ -96,7 +104,7 @@ export function TourOverlay({
               right: 0,
               height: th,
             }}
-            onPress={next}
+            onPress={tapOutsideToAdvance ? next : undefined}
           />
         </>
       )}

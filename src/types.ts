@@ -12,6 +12,7 @@ export interface TourStep<T extends TargetId = TargetId> {
   placement?: 'auto' | 'top' | 'bottom' | 'left' | 'right';
   hidePrevButton?: boolean;
   hideSkipButton?: boolean;
+  blockOutsideTouches?: boolean;
 }
 
 export interface Tour {
@@ -19,6 +20,7 @@ export interface Tour {
   steps: TourStep[];
   onComplete?: () => void;
   onSkip?: () => void;
+  blockOutsideTouches?: boolean;
 }
 
 export interface TargetLayout {
