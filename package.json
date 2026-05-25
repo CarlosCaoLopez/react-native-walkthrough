@@ -64,7 +64,6 @@
     "@eslint/compat": "^2.0.3",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^10.0.1",
-    "@gorhom/portal": "^1.0.14",
     "@jest/globals": "^30.0.0",
     "@react-native/babel-preset": "0.85.0",
     "@react-native/eslint-config": "0.85.0",
@@ -94,7 +93,6 @@
     "typescript": "^6.0.2"
   },
   "peerDependencies": {
-    "@gorhom/portal": ">=1.0.0",
     "@shopify/react-native-skia": ">=1.0.0",
     "expo-router": "*",
     "react": "*",

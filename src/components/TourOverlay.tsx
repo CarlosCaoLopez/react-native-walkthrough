@@ -1,7 +1,12 @@
 import { useCallback, useState } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
-import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
-import { Portal } from '@gorhom/portal';
+import {
+  Modal,
+  Pressable,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTourStore } from '../store/tourStore';
 import { computeTooltipPosition } from '../utils/positioning';
@@ -10,13 +15,11 @@ import { Tooltip } from './Tooltip';
 import { useTourContext } from '../store/tourContext';
 
 interface TourOverlayProps {
-  hostName?: string;
   tapOutsideToAdvance?: boolean;
   blockOutsideTouches?: boolean;
 }
 
 export function TourOverlay({
-  hostName,
   tapOutsideToAdvance = false,
   blockOutsideTouches,
 }: TourOverlayProps) {
@@ -124,9 +127,15 @@ export function TourOverlay({
     </View>
   );
 
-  return hostName ? (
-    <Portal hostName={hostName}>{content}</Portal>
-  ) : (
-    <Portal>{content}</Portal>
+  return (
+    <Modal
+      visible
+      transparent
+      animationType="none"
+      statusBarTranslucent
+      onRequestClose={undefined}
+    >
+      {content}
+    </Modal>
   );
 }
