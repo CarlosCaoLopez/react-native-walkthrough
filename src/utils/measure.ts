@@ -1,5 +1,5 @@
 import type { ComponentRef, RefObject } from 'react';
-import { findNodeHandle, type View } from 'react-native';
+import { type View } from 'react-native';
 import type { TargetLayout } from '../types';
 import { registry } from '../store/registry';
 
@@ -40,9 +40,7 @@ async function attemptMeasure(
   }
 
   const containerRef = registry.getContainerRef();
-  const relativeNode = containerRef?.current
-    ? findNodeHandle(containerRef.current)
-    : null;
+  const relativeNode = containerRef?.current ?? null;
 
   if (relativeNode == null) {
     return measureInWindowFallback(node);
