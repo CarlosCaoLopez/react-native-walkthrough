@@ -123,5 +123,5 @@ export function TourOverlay({
 }
 
 const styles = StyleSheet.create({
-  root: { ...StyleSheet.absoluteFillObject, elevation: 9999, zIndex: 9999 },
+  root: { ...StyleSheet.absoluteFillObject },
 });
