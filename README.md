@@ -1,6 +1,6 @@
 # react-native-quick-walkthrough
 
-![Demo](../output.gif)
+![Demo](assets/output.gif)
 
 [![CI](https://github.com/CarlosCaoLopez/react-native-quick-walkthrough/actions/workflows/ci.yml/badge.svg)](https://github.com/CarlosCaoLopez/react-native-quick-walkthrough/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/react-native-quick-walkthrough)](https://www.npmjs.com/package/react-native-quick-walkthrough)
