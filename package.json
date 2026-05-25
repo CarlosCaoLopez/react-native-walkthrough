@@ -1,6 +1,6 @@
 {
   "name": "react-native-quick-walkthrough",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Modern app walkthrough library compatible with expo router",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
