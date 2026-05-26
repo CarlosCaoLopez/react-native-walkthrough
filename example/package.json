@@ -14,7 +14,7 @@
   "dependencies": {
     "@expo/metro-runtime": "~55.0.11",
     "@gorhom/portal": "^1.0.14",
-    "@shopify/react-native-skia": "2.4.18",
+    "@shopify/react-native-skia": "2.6.4",
     "expo": "~55.0.23",
     "expo-constants": "~55.0.16",
     "expo-dev-client": "~55.0.35",

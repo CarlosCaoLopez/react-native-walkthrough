@@ -4413,11 +4413,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shopify/react-native-skia@npm:2.4.18":
-  version: 2.4.18
-  resolution: "@shopify/react-native-skia@npm:2.4.18"
+"@shopify/react-native-skia@npm:2.6.4":
+  version: 2.6.4
+  resolution: "@shopify/react-native-skia@npm:2.6.4"
   dependencies:
-    canvaskit-wasm: "npm:0.40.0"
+    canvaskit-wasm: "npm:0.41.0"
+    react-native-skia-android: "npm:147.1.0"
+    react-native-skia-apple-ios: "npm:147.1.0"
+    react-native-skia-apple-macos: "npm:147.1.0"
+    react-native-skia-apple-tvos: "npm:147.1.0"
     react-reconciler: "npm:0.31.0"
   peerDependencies:
     react: ">=19.0"
@@ -4429,8 +4433,9 @@ __metadata:
     react-native-reanimated:
       optional: true
   bin:
+    install-skia: scripts/install-libs.js
     setup-skia-web: scripts/setup-canvaskit.js
-  checksum: 10c0/24741a121c0bc3b4c3a321adb89ddcdb3add8cb66334b4a62510b2d11f377e086a1a2a8e3aac2737b9bf4eeb2716a1e026d540e47f1fcaed907030bfc7ee5972
+  checksum: 10c0/0503b6511409a3d672afbd2f4a9c56ee4523771de06907a3751d9de8588d523b035dec3d6a0cd3316c95cfdf974fb2b58fc86db05d73dbf16698567edc8dc424
   languageName: node
   linkType: hard
 
@@ -5936,15 +5941,6 @@ __metadata:
   version: 1.0.30001792
   resolution: "caniuse-lite@npm:1.0.30001792"
   checksum: 10c0/03bab64b123453e18e7c6747c32bb820be6d82ac78536c5c3704988aaeec411715a2045069fb569f872d73acf1ea64bf83508c9fdfa87b6d012236cde738e1be
-  languageName: node
-  linkType: hard
-
-"canvaskit-wasm@npm:0.40.0":
-  version: 0.40.0
-  resolution: "canvaskit-wasm@npm:0.40.0"
-  dependencies:
-    "@webgpu/types": "npm:0.1.21"
-  checksum: 10c0/dde817c0ef979a67afad4ac3adf31c03133af2592efec17f715a98508fdf801104fbf05af29723fb39b4d8b2798ce5306bb3cb5c062209d9d90a750430f3361d
   languageName: node
   linkType: hard
 
@@ -12354,7 +12350,7 @@ __metadata:
   dependencies:
     "@expo/metro-runtime": "npm:~55.0.11"
     "@gorhom/portal": "npm:^1.0.14"
-    "@shopify/react-native-skia": "npm:2.4.18"
+    "@shopify/react-native-skia": "npm:2.6.4"
     expo: "npm:~55.0.23"
     expo-constants: "npm:~55.0.16"
     expo-dev-client: "npm:~55.0.35"
