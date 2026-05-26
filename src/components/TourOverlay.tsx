@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
-import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Pressable, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTourStore } from '../store/tourStore';
 import { computeTooltipPosition } from '../utils/positioning';
@@ -60,7 +60,8 @@ export function TourOverlay({
   const { x: tx, y: ty, width: tw, height: th } = activeLayout;
 
   return (
-    <View style={styles.root} pointerEvents="box-none">
+    <>
+      <Spotlight layout={activeLayout} />
       {(effectiveBlock || tapOutsideToAdvance) && (
         <>
           <Pressable
@@ -105,7 +106,6 @@ export function TourOverlay({
           />
         </>
       )}
-      <Spotlight layout={activeLayout} />
       <Tooltip
         title={step.title}
         text={step.text}
@@ -118,10 +118,6 @@ export function TourOverlay({
         onSkip={step.hideSkipButton ? undefined : skip}
         onLayout={handleTooltipLayout}
       />
-    </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  root: { ...StyleSheet.absoluteFillObject },
-});
