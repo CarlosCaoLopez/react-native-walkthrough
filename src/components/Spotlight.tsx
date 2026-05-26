@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Svg, { Defs, Mask, Rect } from 'react-native-svg';
 import Animated, {
   useAnimatedProps,
@@ -56,33 +56,32 @@ export function Spotlight({
     height: hh.value,
   }));
 
+  // El wrapper View con pointerEvents="none" garantiza que iOS propague
+  // userInteractionEnabled=NO al subtree (react-native-svg no lo hace de forma
+  // fiable sobre <Svg> directamente). En Android es no-op funcional.
   return (
-    // pointerEvents="none" asegura que los toques pasen a través del overlay hacia los botones
-    <Svg style={StyleSheet.absoluteFill} pointerEvents="none">
-      <Defs>
-        <Mask id="spotlight-mask">
-          {/* El fondo de la máscara en BLANCO (lo que será visible del overlay) */}
-          <Rect x="0" y="0" width="100%" height="100%" fill="white" />
-
-          {/* El agujero animado en NEGRO (lo que perforará el overlay) */}
-          <AnimatedRect
-            animatedProps={animatedHoleProps}
-            rx={borderRadius} // Radio en el eje X
-            ry={borderRadius} // Radio en el eje Y
-            fill="black"
-          />
-        </Mask>
-      </Defs>
-
-      {/* Este es el fondo oscuro real que cubre toda la pantalla */}
-      <Rect
-        x="0"
-        y="0"
-        width="100%"
-        height="100%"
-        fill={overlayColor}
-        mask="url(#spotlight-mask)" // Aplicamos la máscara aquí
-      />
-    </Svg>
+    <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+      <Svg style={StyleSheet.absoluteFill}>
+        <Defs>
+          <Mask id="spotlight-mask">
+            <Rect x="0" y="0" width="100%" height="100%" fill="white" />
+            <AnimatedRect
+              animatedProps={animatedHoleProps}
+              rx={borderRadius}
+              ry={borderRadius}
+              fill="black"
+            />
+          </Mask>
+        </Defs>
+        <Rect
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          fill={overlayColor}
+          mask="url(#spotlight-mask)"
+        />
+      </Svg>
+    </View>
   );
 }
