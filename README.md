@@ -20,7 +20,7 @@ Existing walkthrough libraries (e.g. `react-native-copilot`) assume all tour ste
 ```
 Consumer App
   │
-  ├── <TourProvider>              ← injects adapters, mounts TourOverlay via Portal
+  ├── <TourProvider>              ← injects adapters, renders TourOverlay as sibling of children
   │   │
   │   ├── <TourTarget id="a">    ← registers ref on mount, unregisters on unmount
   │   │     {children}
@@ -28,8 +28,8 @@ Consumer App
   │   └── <TourTarget id="b">
   │         {children}
   │
-  └── <TourOverlay>  (Portal → root, above navigator)
-        ├── <Spotlight>           ← Skia Canvas, UI-thread Reanimated SharedValues
+  └── <TourOverlay>  (sibling View, same container as targets)
+        ├── <Spotlight>           ← 4 dark edge strips + 4 rounded corners, UI-thread Reanimated
         └── <Tooltip>             ← auto-positioned via utils/positioning.ts
 
 Engine per step:
@@ -58,7 +58,7 @@ yarn add react-native-quick-walkthrough
 ### Peer Dependencies
 
 ```sh
-yarn add @shopify/react-native-skia react-native-reanimated @gorhom/portal react-native-safe-area-context
+yarn add react-native-reanimated react-native-safe-area-context
 ```
 
 For Expo Router:
@@ -67,7 +67,7 @@ For Expo Router:
 # expo-router is already installed in Expo projects — no extra step needed
 ```
 
-Follow the platform setup guides for [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/) and [@shopify/react-native-skia](https://shopify.github.io/react-native-skia/docs/getting-started/installation) before proceeding.
+Follow the platform setup guide for [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/) before proceeding.
 
 ---
 
@@ -184,13 +184,13 @@ React Navigation adapter is not yet shipped.
 
 ### TourProvider props
 
-| Prop                  | Type                                 | Required | Description                                          |
-| --------------------- | ------------------------------------ | -------- | ---------------------------------------------------- |
-| `tours`               | `Tour[]`                             | yes      | All tours the consumer wants to start by id          |
-| `navigationAdapter`   | `NavigationAdapter`                  | yes      | Navigation adapter (e.g. `adapter` from Expo Router) |
-| `persistence`         | `PersistenceAdapter`                 | no       | Key-value store for completion state                 |
-| `overlayLevel`        | `'navigator' \| 'modal' \| 'system'` | no       | Portal host. Default `'navigator'`                   |
-| `tapOutsideToAdvance` | `boolean`                            | no       | Tap outside spotlight to advance                     |
+| Prop                  | Type                 | Required | Description                                          |
+| --------------------- | -------------------- | -------- | ---------------------------------------------------- |
+| `tours`               | `Tour[]`             | yes      | All tours the consumer wants to start by id          |
+| `navigationAdapter`   | `NavigationAdapter`  | yes      | Navigation adapter (e.g. `adapter` from Expo Router) |
+| `persistence`         | `PersistenceAdapter` | no       | Key-value store for completion state                 |
+| `tapOutsideToAdvance` | `boolean`            | no       | Tap outside spotlight to advance                     |
+| `blockOutsideTouches` | `boolean`            | no       | Block touches outside the spotlight hole             |
 
 ### PersistenceAdapter
 
